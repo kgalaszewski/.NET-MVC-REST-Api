@@ -1,0 +1,31 @@
+﻿@model IEnumerable<AnimalNotDonkey>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Welcome to our animal tinder</h1>
+<br />
+<h2>Join us ! </h2> <a class="btn btn-primary" asp-action="Create" asp-controller="AnimalNotDonkeys">Join us</a>
+<br />
+<h2>Login ! </h2> <a class="btn btn-primary" asp-action="Login" asp-controller="AnimalNotDonkeys">Login</a>
+<br /><br /><br />
+<h1>List of our current animals : </h1>
+<br />
+
+<table class="table table-bordered" width="100%">
+    <tr>
+        <th>Name</th>
+        <th>Breed</th>
+        <th>avatar</th>
+    </tr>
+
+    @foreach (var animal in Model)
+    {
+        <tr>
+            <td>@animal.Name</td>
+            <td>@animal.AnimalType</td>
+            <td>tu ma byc zdj</td>
+        </tr>
+    }
+</table>
+

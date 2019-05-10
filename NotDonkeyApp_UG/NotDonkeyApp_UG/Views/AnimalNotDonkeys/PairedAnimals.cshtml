@@ -1,0 +1,25 @@
+﻿@model IEnumerable<AnimalNotDonkey>
+@{
+    ViewData["Title"] = "PairedAnimals";
+}
+
+<h2>PairedAnimals</h2>
+
+<br />
+
+<table class="table table-bordered" width="100%">
+    <tr>
+        <th>Name</th>
+        <th>Breed</th>
+        <th>avatar</th>
+    </tr>
+
+    @foreach (var animal in Model)
+    {
+        <tr>
+            <td>@animal.Name</td>
+            <td>@animal.AnimalType</td>
+            <td>tu ma byc zdj</td>
+        </tr>
+    }
+</table>
