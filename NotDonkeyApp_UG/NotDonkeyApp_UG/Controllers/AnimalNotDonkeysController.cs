@@ -71,6 +71,7 @@ namespace NotDonkeyApp_UG.Controllers
                     user.AnimalsYouLike += $"{id.ToString()}.";
                     StaticDetails.DonkeysAvailableToLike.Remove(StaticDetails.DonkeysAvailableToLike.Where(x => x.Id == id).SingleOrDefault());
                     _db.SaveChanges();
+                    StaticDetails.DonkeysAvailableToLike = _db.NotDonkeys.ToList();
                 }
                 return RedirectToAction("AllAnimals");
             }
