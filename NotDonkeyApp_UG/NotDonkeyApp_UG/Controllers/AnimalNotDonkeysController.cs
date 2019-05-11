@@ -120,11 +120,14 @@ namespace NotDonkeyApp_UG.Controllers
             {
                 var user = _db.NotDonkeys.FirstOrDefault(x => x.OwnerPhoneNumber == ownerPhoneNumber);
 
-                if (user.Password == password)
+                if (user != null)
                 {
-                    StaticDetails.CurrentUserId = user.Id;
+                    if (user.Password == password)
+                    {
+                        StaticDetails.CurrentUserId = user.Id;
 
-                    return RedirectToAction("PairedAnimals");
+                        return RedirectToAction("PairedAnimals");
+                    }
                 }
 
                 return View();
