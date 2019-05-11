@@ -1,31 +1,40 @@
 ﻿@model IEnumerable<AnimalNotDonkey>
+@using NotDonkeyApp_UG.Data;
 @{
     ViewData["Title"] = "Index";
 }
 
-<h1>Welcome to our animal tinder</h1>
-<br />
-<h2>Join us ! </h2> <a class="btn btn-primary" asp-action="Create" asp-controller="AnimalNotDonkeys">Join us</a>
-<br />
-<h2>Login ! </h2> <a class="btn btn-primary" asp-action="Login" asp-controller="AnimalNotDonkeys">Login</a>
-<br /><br /><br />
-<h1>List of our current animals : </h1>
-<br />
+<body style="background-color:lightblue">
+    <h1 style="color:black">Welcome to our animal tinder (づ｡ ◕‿‿◕｡) づ</h1>
+    <h2 style="color:dodgerblue">Join us ! </h2> <a class="btn btn-success" asp-action="Create" asp-controller="AnimalNotDonkeys">Join us</a>
+    <br />
+    <h2 style="color:dodgerblue">Login ! </h2> <a class="btn btn-success" asp-action="Login" asp-controller="AnimalNotDonkeys">Login</a>
+    <br /><br />
+    <h1 style="color:black">List of our current animals : </h1>
+    <br />
 
-<table class="table table-bordered" width="100%">
-    <tr>
-        <th>Name</th>
-        <th>Breed</th>
-        <th>avatar</th>
-    </tr>
-
-    @foreach (var animal in Model)
-    {
+    <table class="table table-bordered" width="100%" style="background-color:lightyellow">
         <tr>
-            <td>@animal.Name</td>
-            <td>@animal.AnimalType</td>
-            <td>tu ma byc zdj</td>
+            <th>avatar</th>
+            <th>Name</th>
+            <th>Breed</th>
+            <th>Sex</th>
+            <th>Weight</th>
+            <th>Additional Description</th>
         </tr>
-    }
-</table>
+
+        @foreach (var animal in Model)
+        {
+            string avatarUrl = $"{@StaticDetails.AvatarUrl}{animal.AnimalType}.jpg";
+            <tr>
+                <td width="10%"><img src="@avatarUrl" width="100%" height="70px" style="margin:auto; display:block; border-radius:5px; border:1px solid #bbb9b9" /></td>
+                <td>@animal.Name</td>
+                <td>@animal.AnimalType</td>
+                <td>@animal.Sex</td>
+                <td>@animal.Weight</td>
+                <td>@animal.AdditionalDescription</td>
+            </tr>
+        }
+    </table>
+</body>
 

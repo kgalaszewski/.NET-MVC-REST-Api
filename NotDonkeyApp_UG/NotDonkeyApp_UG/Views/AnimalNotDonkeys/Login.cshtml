@@ -3,15 +3,17 @@
     ViewData["Title"] = "Login";
 }
 
-<h2>Login</h2>
-<br />
-
-<form asp-action="Login">
-    <label asp-for="OwnerPhoneNumber" class="control-label"></label>
-    <input asp-for="OwnerPhoneNumber" class="form-control" />
-    <br />    
-    <label asp-for="Password" class="control-label"></label>
-    <input asp-for="Password" class="form-control" />
+<body style="background-color:lightblue">
+    <h2>Login into our awesome service ...   ̿'̿'\̵͇̿̿\з=( ͠° ͟ʖ ͡°)=ε/̵͇̿̿/'̿̿ ̿ ̿ ̿ ̿ ̿</h2>
     <br />
-    <input type="submit" value="Login" class="btn btn-default" />
-</form>
+
+    <form asp-action="Login">
+        <label asp-for="OwnerPhoneNumber" class="control-label"> Owner phone number</label>
+        <input asp-for="OwnerPhoneNumber" class="form-control" />
+        <br />
+        <label asp-for="Password" class="control-label"></label>
+        <input asp-for="Password" class="form-control" />
+        <br />
+        <input type="submit" value="Login" class="btn btn-success" />
+    </form>
+</body>

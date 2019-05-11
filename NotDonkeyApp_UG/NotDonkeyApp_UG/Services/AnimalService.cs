@@ -9,7 +9,8 @@ namespace NotDonkeyApp_UG.Services
     {
         private static AnimalService ServiceInstance = null;
         // All supported animal types which are also avatar names
-        private readonly List<string> AnimalTypes = new List<string>() { "pies", "kot", "kon", "swinia" }; // if you add more animals, add img with its name as well xd
+        // if you add more animals, add img with its name as well xd
+        private readonly List<string> AnimalTypes = new List<string>() { "pies", "kot", "kon", "swinia", "papuga", "krab", "donkey", "niedzwiedz", "zyrafa" }; 
 
         public static AnimalService Instance
         {

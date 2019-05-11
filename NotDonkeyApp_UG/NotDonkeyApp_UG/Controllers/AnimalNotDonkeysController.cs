@@ -21,58 +21,91 @@ namespace NotDonkeyApp_UG.Controllers
             _db = db;
         }
 
+        #region Controller Basic Methods
         public IActionResult Index()
         {
-            var listOfAllUsers = _db.NotDonkeys.ToList();
+            try
+            {
+                var listOfAllUsers = _db.NotDonkeys.ToList();
 
-            return View(listOfAllUsers);
+                return View(listOfAllUsers);
+            }
+            catch (Exception ex)
+            {
+                SetErrorDetails(ex, "An error occured during trying to reach main page");
+                return RedirectToAction("ThrowErrorMessage");
+            }
         }
 
         public IActionResult AllAnimals()
         {
-            if (!StaticDetails.DonkeysAvailableToLike.Any())
+            try
             {
-                var listOfAllUsers = _db.NotDonkeys.ToList();
+                if (!StaticDetails.DonkeysAvailableToLike.Any())
+                {
+                    var listOfAllUsers = _db.NotDonkeys.ToList();
 
-                StaticDetails.DonkeysAvailableToLike = listOfAllUsers;
+                    StaticDetails.DonkeysAvailableToLike = listOfAllUsers;
 
-                return View(listOfAllUsers);
+                    return View(listOfAllUsers);
+                }
+                else
+                {
+                    return View(StaticDetails.DonkeysAvailableToLike);
+                }
             }
-            else
+            catch (Exception ex)
             {
-                return View(StaticDetails.DonkeysAvailableToLike);
+                SetErrorDetails(ex, "An error occured during trying to display all animals");
+                return RedirectToAction("ThrowErrorMessage");
             }
         }
 
         public IActionResult AddAnimalToFavourites(int id)
         {
-            var user = _db.NotDonkeys.Find(StaticDetails.CurrentUserId);
-            if (user != null)
+            try
             {
-                user.AnimalsYouLike += $"{id.ToString()}.";
-                StaticDetails.DonkeysAvailableToLike.Remove(StaticDetails.DonkeysAvailableToLike[id]);
-                _db.SaveChanges();
+                var user = _db.NotDonkeys.Find(StaticDetails.CurrentUserId);
+                if (user != null)
+                {
+                    user.AnimalsYouLike += $"{id.ToString()}.";
+                    StaticDetails.DonkeysAvailableToLike.Remove(StaticDetails.DonkeysAvailableToLike.Where(x => x.Id == id).SingleOrDefault());
+                    _db.SaveChanges();
+                }
+                return RedirectToAction("AllAnimals");
             }
-            return RedirectToAction("AllAnimals");
+            catch (Exception ex)
+            {
+                SetErrorDetails(ex, "An error occured during trying to Add animal to your favourites");
+                return RedirectToAction("ThrowErrorMessage");
+            }
         }
 
         public IActionResult PairedAnimals()
         {
-            var user = _db.NotDonkeys.Find(StaticDetails.CurrentUserId);
-            if (user != null)
+            try
             {
-                var allAnimalLikedids = AnimalService.Instance.ProceedUserIds(user.AnimalsYouLike ?? String.Empty);
-                List<AnimalNotDonkey> yourAnimalsList = new List<AnimalNotDonkey>();
-
-                foreach (var id in allAnimalLikedids)
+                var user = _db.NotDonkeys.Find(StaticDetails.CurrentUserId);
+                if (user != null)
                 {
-                    yourAnimalsList.Add(_db.NotDonkeys.Find(id));
+                    var allAnimalLikedids = AnimalService.Instance.ProceedUserIds(user.AnimalsYouLike ?? String.Empty);
+                    List<AnimalNotDonkey> yourAnimalsList = new List<AnimalNotDonkey>();
+
+                    foreach (var id in allAnimalLikedids)
+                    {
+                        yourAnimalsList.Add(_db.NotDonkeys.Find(id));
+                    }
+
+                    return View(yourAnimalsList);
                 }
 
-                return View(yourAnimalsList);
+                return View(new List<AnimalNotDonkey>());
             }
-
-            return View(new List<AnimalNotDonkey>());
+            catch (Exception ex)
+            {
+                SetErrorDetails(ex, "An error occured during trying to get all paired animals");
+                return RedirectToAction("ThrowErrorMessage");
+            }
         }
 
         public IActionResult Login()
@@ -83,35 +116,73 @@ namespace NotDonkeyApp_UG.Controllers
         [HttpPost]
         public IActionResult Login(int ownerPhoneNumber, string password)
         {
-            var user = _db.NotDonkeys.FirstOrDefault(x => x.OwnerPhoneNumber == ownerPhoneNumber);
-
-            if (user.Password == password)
+            try
             {
-                StaticDetails.CurrentUserId = user.Id;
+                var user = _db.NotDonkeys.FirstOrDefault(x => x.OwnerPhoneNumber == ownerPhoneNumber);
 
-                return RedirectToAction("PairedAnimals");
+                if (user.Password == password)
+                {
+                    StaticDetails.CurrentUserId = user.Id;
+
+                    return RedirectToAction("PairedAnimals");
+                }
+
+                return View();
             }
-
-            return View();
+            catch (Exception ex)
+            {
+                SetErrorDetails(ex, "An error occured during Logging in");
+                return RedirectToAction("ThrowErrorMessage");
+            }
         }
 
         public IActionResult Create()
         {
-            return View();
+            try
+            {
+                return View();
+            }
+            catch (Exception ex)
+            {
+                SetErrorDetails(ex, "An error occured");
+                return RedirectToAction("ThrowErrorMessage");
+            }
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,OwnerPhoneNumber,Name,Password,AnimalType,Sex,Weight,AdditionalDescription,IsDonkey,AnimalsYouLike")] AnimalNotDonkey animalNotDonkey)
         {
-            if (ModelState.IsValid && !animalNotDonkey.IsDonkey)
+            try
             {
-                animalNotDonkey.AnimalType = AnimalService.Instance.SetAnimalType(animalNotDonkey.AnimalType);
-                _db.Add(animalNotDonkey);
-                await _db.SaveChangesAsync();
-                return View("Login");
+                if (ModelState.IsValid && !animalNotDonkey.IsDonkey)
+                {
+                    animalNotDonkey.AnimalType = AnimalService.Instance.SetAnimalType(animalNotDonkey.AnimalType);
+                    _db.Add(animalNotDonkey);
+                    await _db.SaveChangesAsync();
+                    return View("Login");
+                }
+                return View(animalNotDonkey);
             }
-            return View(animalNotDonkey);
+            catch (Exception ex)
+            {
+                SetErrorDetails(ex, "Error occured during creating new animal");
+                return RedirectToAction("ThrowErrorMessage");
+            }
         }
+
+        public IActionResult ThrowErrorMessage()
+        {
+            return View();
+        }
+        #endregion
+
+        #region Helper Methods
+        private void SetErrorDetails(Exception ex, string msgToDisplay)
+        {
+            StaticDetails.CurrentErrorMsg = $"An error occured due to : {ex.Message}";
+            StaticDetails.AdditionalErrorInfo = msgToDisplay;
+        }
+        #endregion
     }
 }
