@@ -7,6 +7,7 @@
     <script src="Scripts/jquery-3.0.0.js"></script>
     <script src="Scripts/popper.js"></script>
     <script src="Scripts/bootstrap.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.3.min.js"></script>
 </head>
 <body style="background-color:lightblue">
@@ -21,7 +22,7 @@
         <br />
         <h2>Edit your number : </h2>
         <br />
-        <input type="number" id="nrtel"/>
+        <input type="number" id="nrtel" />
         <button class="btn btn-danger" onclick="editNumber()">Edit</button>
         <br /><br /><br />
 
@@ -52,7 +53,7 @@
             var newNumber = document.getElementById("nrtel").value;
 
             $.ajax({
-                url: 'https://localhost:44357/RestAnimal/'+newNumber,
+                url: 'https://localhost:44357/RestAnimal/' + newNumber,
                 type: 'PUT',
                 success: function (result) {
                 }
@@ -60,5 +61,27 @@
 
             window.location.href = 'https://localhost:44357/AnimalNotDonkeys/';
         }
+
+
+        $(document).ready(function(){
+            $("body").on({
+            mouseenter: function(){
+                $(this).css("background-color", "gray");
+            },  
+       
+            mouseleave: function(){
+                $(this).css("background-color", "black");
+            },
+       
+            dblclick: function(){
+                $(this).css("background-color", "yellow");
+            }
+            });
+        });
+
+        function Changebackground() {
+            $(this).css("background-color", "gray");
+        }
+
     </script>
 </body>
