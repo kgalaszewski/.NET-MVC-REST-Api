@@ -3,9 +3,14 @@
 @{
     ViewData["Title"] = "Create";
 }
+
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+</head>
 <body style="background-color:lightblue">
     <br />
     <h1>Create your animal profile and find its love ☜(˚▽˚)☞</h1>
+
     <br />
     <hr />
     <div class="row">
@@ -47,20 +52,22 @@
                     <input asp-for="AdditionalDescription" class="form-control" />
                     <span asp-validation-for="AdditionalDescription" class="text-danger"></span>
                 </div>
-                <div class="form-group">
-                    <div class="checkbox">
-                        <label>
-                            <input asp-for="IsDonkey" /> @Html.DisplayNameFor(model => model.IsDonkey)
-                        </label>
+                <div ng-app="" ng-init="mySwitch=true">
+                    <div class="form-group">
+                        <div class="checkbox">
+                            <label>
+                                <input ng-model="mySwitch" asp-for="IsDonkey" /> @Html.DisplayNameFor(model => model.IsDonkey)
+                            </label>
+                        </div>
                     </div>
-                </div>
-                <div class="form-group hidden">
-                    <label asp-for="AnimalsYouLike" class="control-label"></label>
-                    <input asp-for="AnimalsYouLike" class="form-control" />
-                    <span asp-validation-for="AnimalsYouLike" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <input type="submit" value="Create" class="btn btn-danger" />
+                    <div class="form-group hidden">
+                        <label asp-for="AnimalsYouLike" class="control-label"></label>
+                        <input asp-for="AnimalsYouLike" class="form-control" />
+                        <span asp-validation-for="AnimalsYouLike" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input ng-disabled="mySwitch" type="submit" value="Create" class="btn btn-danger" />
+                    </div>
                 </div>
             </form>
         </div>
