@@ -36,13 +36,13 @@
 
             Hide my details : <input type="checkbox" ng-model="myCheck">
 
-                              <div ng-hide="myCheck" id="xyz">
-                                  <h3>Breed : @Html.DisplayFor(x => x.AnimalType)</h3>
-                                  <h3>Sex : @Html.DisplayFor(x => x.Sex)</h3>
-                                  <h3>Weight : @Html.DisplayFor(x => x.Weight)</h3>
-                                  <h3>Password : @Html.DisplayFor(x => x.Password)</h3>
-                                  <h3>Name : @Html.DisplayFor(x => x.Name)</h3>
-                              </div>
+            <div ng-hide="myCheck" id="xyz">
+                <h3>Breed : @Html.DisplayFor(x => x.AnimalType)</h3>
+                <h3>Sex : @Html.DisplayFor(x => x.Sex)</h3>
+                <h3>Weight : @Html.DisplayFor(x => x.Weight)</h3>
+                <h3>Password : @Html.DisplayFor(x => x.Password)</h3>
+                <h3>Name : @Html.DisplayFor(x => x.Name)</h3>
+            </div>
 
             <script>
                 var app = angular.module('myApp', ['ngAnimate']);
