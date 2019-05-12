@@ -32,5 +32,7 @@ namespace NotDonkeyApp_UG.Data
         /// </summary>
         public static string CurrentErrorMsg { get; set; }
         public static string AdditionalErrorInfo { get; set; }
+
+        public static bool IsUserLogged { get; set; }
     }
 }

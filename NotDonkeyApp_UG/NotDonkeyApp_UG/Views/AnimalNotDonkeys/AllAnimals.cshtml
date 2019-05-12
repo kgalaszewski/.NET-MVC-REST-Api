@@ -3,8 +3,10 @@
 @{
     ViewData["Title"] = "AllAnimals";
 }
-
 <body style="background-color:lightblue">
+
+    <div id="root"></div>
+
     <h1>Check out our all verified Animals ヽ(◕ヮ◕ヽ)</h1>
     <br />
 
@@ -16,6 +18,7 @@
             <th>Sex</th>
             <th>Weight</th>
             <th>Additional Description</th>
+            <th></th>
             <th></th>
         </tr>
 
@@ -29,6 +32,7 @@
                 <td>@animal.Sex</td>
                 <td>@animal.Weight</td>
                 <td>@animal.AdditionalDescription</td>
+                <td></td>
                 @if (StaticDetails.CurrentUserId != animal.Id)
                 {
                     <td><a class="btn btn-success" asp-controller="AnimalNotDonkeys" asp-action="AddAnimalToFavourites" asp-route-Id="@animal.Id">Like It</a></td>

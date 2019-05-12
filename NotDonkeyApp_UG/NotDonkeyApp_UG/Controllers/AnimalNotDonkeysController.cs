@@ -130,7 +130,7 @@ namespace NotDonkeyApp_UG.Controllers
                         return RedirectToAction("PairedAnimals");
                     }
                 }
-
+                StaticDetails.IsUserLogged = true;
                 return View();
             }
             catch (Exception ex)
@@ -164,6 +164,7 @@ namespace NotDonkeyApp_UG.Controllers
                     animalNotDonkey.AnimalType = AnimalService.Instance.SetAnimalType(animalNotDonkey.AnimalType);
                     _db.Add(animalNotDonkey);
                     await _db.SaveChangesAsync();
+                    StaticDetails.DonkeysAvailableToLike = _db.NotDonkeys.ToList();
                     return View("Login");
                 }
                 return View(animalNotDonkey);
@@ -179,6 +180,20 @@ namespace NotDonkeyApp_UG.Controllers
         {
             return View();
         }
+
+        public IActionResult UserProfile()
+        {
+            if (StaticDetails.CurrentUserId > 0)
+            {
+                var currentUser = _db.NotDonkeys.Find(StaticDetails.CurrentUserId);
+                return View(currentUser);
+            }
+            else
+            {
+                return RedirectToAction("Login");
+            }
+        }
+
         #endregion
 
         #region Helper Methods
