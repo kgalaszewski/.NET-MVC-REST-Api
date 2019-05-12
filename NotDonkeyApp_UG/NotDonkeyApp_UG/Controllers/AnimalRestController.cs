@@ -50,6 +50,7 @@ namespace NotDonkeyApp_UG.Controllers
             StaticDetails.CurrentUserId = -1;
             _db.NotDonkeys.Remove(animalToRemove);
             _db.SaveChanges();
+            StaticDetails.IsUserLogged = false;
         }
     }
 }
