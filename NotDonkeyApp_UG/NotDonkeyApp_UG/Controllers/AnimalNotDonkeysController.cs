@@ -61,6 +61,54 @@ namespace NotDonkeyApp_UG.Controllers
             }
         }
 
+        public IActionResult AllAnimalsInformations()
+        {
+            try
+            {
+                OneTimeAddInformations();
+
+                var informationsToReturn = _db.AnimalsInformations.ToList();
+                if (informationsToReturn.Any())
+                    return View(informationsToReturn);
+
+                SetErrorDetails(new Exception("Woops"), "List of informations about animals is currently empty");
+                return RedirectToAction("ThrowErrorMessage");
+            }
+            catch (Exception ex)
+            {
+                SetErrorDetails(ex, "An error occured during trying to display all informations about animals");
+                return RedirectToAction("ThrowErrorMessage");
+            }
+        }
+
+        private void OneTimeAddInformations()
+        {
+            if (_db.AnimalsInformations.ToList().Count == 0)
+            {
+                _db.AnimalsInformations.Add(new AnimalWikiInformation() { AnimalName = "donkey", Information = AnimalWikiInformations.OsiolInformation });
+                _db.AnimalsInformations.Add(new AnimalWikiInformation() { AnimalName = "kon", Information = AnimalWikiInformations.KonInformation });
+                _db.AnimalsInformations.Add(new AnimalWikiInformation() { AnimalName = "kot", Information = AnimalWikiInformations.KotInformation });
+                _db.AnimalsInformations.Add(new AnimalWikiInformation() { AnimalName = "krab", Information = AnimalWikiInformations.KrabInformation });
+                _db.AnimalsInformations.Add(new AnimalWikiInformation() { AnimalName = "niedzwiedz", Information = AnimalWikiInformations.NiedzwiedzInformation });
+                _db.AnimalsInformations.Add(new AnimalWikiInformation() { AnimalName = "papuga", Information = AnimalWikiInformations.PapugaInformation });
+                _db.AnimalsInformations.Add(new AnimalWikiInformation() { AnimalName = "pies", Information = AnimalWikiInformations.PiesInformation });
+                _db.AnimalsInformations.Add(new AnimalWikiInformation() { AnimalName = "swinia", Information = AnimalWikiInformations.SwiniaInformation });
+                _db.AnimalsInformations.Add(new AnimalWikiInformation() { AnimalName = "zyrafa", Information = AnimalWikiInformations.ZyrafaInformation });
+                _db.SaveChanges();
+            }
+        }
+
+        public IActionResult AddNewAnimal()
+        {
+            return View();
+        }
+
+        public IActionResult UpdateAnimal(int Id)
+        {
+            var info = _db.AnimalsInformations.Find(Id);
+            return View(info);
+        }
+
         public IActionResult AddAnimalToFavourites(int id)
         {
             try
