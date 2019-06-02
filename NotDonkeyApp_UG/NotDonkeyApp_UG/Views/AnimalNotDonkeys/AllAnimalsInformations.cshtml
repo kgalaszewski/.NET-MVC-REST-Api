@@ -22,7 +22,7 @@
                 {
                     var animalUrl = StaticDetails.AvatarUrl + info.AnimalName + ".jpg";
                     <tr>
-                        <th scope="row"><img src="@animalUrl" width="30%" height="70px" style="margin:auto; display:block; border-radius:5px; border:1px solid #bbb9b9" /><br />@info.AnimalName</th>
+                        <th scope="row"><img src="@animalUrl" width="40%" height="70px" style="margin:auto; display:block; border-radius:5px; border:1px solid #bbb9b9" /><br />@info.AnimalName</th>
                         <td>@info.Information</td>
                         <td>
                             <input type="button" class="btn btn-danger" value="Report Info Outdated" ng-click="ShowAlert()" />
@@ -32,6 +32,7 @@
                 }
             </tbody>
         </table>
+        <a asp-action="Wiki" asp-controller="AnimalNotDonkeys">Get our wiki info in Json format !</a>
     </div>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.9/angular.min.js"></script>
     <script type="text/javascript">
@@ -42,4 +43,5 @@
             }
         });
     </script>
+
 </body>

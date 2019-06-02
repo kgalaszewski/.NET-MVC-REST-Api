@@ -37,6 +37,16 @@ namespace NotDonkeyApp_UG.Controllers
             }
         }
 
+        public IActionResult Wiki()
+        {
+            return View();
+        }
+
+        public IActionResult AddNewAnimal()
+        {
+            return View();
+        }
+
         public IActionResult AllAnimals()
         {
             try
@@ -96,11 +106,6 @@ namespace NotDonkeyApp_UG.Controllers
                 _db.AnimalsInformations.Add(new AnimalWikiInformation() { AnimalName = "zyrafa", Information = AnimalWikiInformations.ZyrafaInformation });
                 _db.SaveChanges();
             }
-        }
-
-        public IActionResult AddNewAnimal()
-        {
-            return View();
         }
 
         public IActionResult UpdateAnimal(int Id)

@@ -2,13 +2,64 @@
 @{
     ViewData["Title"] = "UpdateAnimal";
 }
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+</head>
 <body style="background-color:lightblue">
     <br />
-    <h1>Update Animal Info - @Model.AnimalName</h1>
+    <button class="btn btn-danger" onclick="deleteAnimal()">Delete this info from Wiki</button>
+    <h1>Update Animal Info for animal called : <h1 style="color:red">@Model.AnimalName</h1></h1>
     <br />
-    <h3>@Model.Information</h3>
+    <div ng-app="myApp" ng-controller="myCtrl">
+
+        <button class="btn btn-success" ng-click="myFunc()">Check current animal info</button>
+
+        <div ng-show="showMe">
+            <h3>@Model.Information</h3>
+        </div>
+
+    </div>
     <br />
-    <input type="text" name="name" style="width:500px; height:100px;" />
+    <h1>Write your proposal updated info here : </h1>
+    <input type="text" name="name" style="width:500px; height:100px;" id="info" />
+    <input type="text" id="infoId" class="hidden" value="@Model.Id" />
     <br />
-    <button>Update Info</button>
+    <button class="btn btn-success" onclick="editNumber()">Update Info</button>
+
+    <script>
+        var app = angular.module('myApp', []);
+        app.controller('myCtrl', function ($scope) {
+            $scope.showMe = false;
+            $scope.myFunc = function () {
+                $scope.showMe = !$scope.showMe;
+            }
+        });
+
+        function editNumber() {
+            var info = document.getElementById("info").value;
+            var infoId = document.getElementById("infoId").value;
+
+            $.ajax({
+                url: 'https://localhost:44357/WikiAnimal/' + info + '/' + infoId,
+                type: 'PUT',
+                success: function (result) {
+                }
+            });
+
+            window.location.href = 'https://localhost:44357/AnimalNotDonkeys/';
+        }
+
+        function deleteAnimal() {
+            var Id = document.getElementById("infoId").value;
+
+            $.ajax({
+                url: 'https://localhost:44357/WikiAnimal/' + Id,
+                type: 'DELETE',
+                success: function (result) {
+                }
+            });
+
+            window.location.href = 'https://localhost:44357/AnimalNotDonkeys/';
+        }
+    </script>
 </body>

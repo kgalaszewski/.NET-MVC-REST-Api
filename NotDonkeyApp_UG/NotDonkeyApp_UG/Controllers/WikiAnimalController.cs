@@ -3,59 +3,51 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using GraniteHouse.Data;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using NotDonkeyApp_UG.Data;
 using NotDonkeyApp_UG.Models;
-
 
 namespace NotDonkeyApp_UG.Controllers
 {
     [Route("[controller]/")]
     [ApiController]
-    public class WikiAnimalContorller : Controller
+    public class WikiAnimalController : Controller
     {
         public ApplicationDbContext _db { get; set; }
 
-        public WikiAnimalContorller(ApplicationDbContext db)
+        public WikiAnimalController(ApplicationDbContext db)
         {
             _db = db;
         }
 
-        //[HttpGet]
-        //public List<AnimalNotDonkey> Get()
-        //{
-        //    return _db.NotDonkeys.ToList();
-        //}
-
         [HttpGet]
-        public string Get()
+        public List<AnimalWikiInformation> Get()
         {
-            return "test";
+            return _db.AnimalsInformations.ToList();
         }
 
-        [HttpPost]
-        public void Post(AnimalNotDonkey animal)
+        [HttpPost("{name}/{info}")]
+        public void Post(string name, string info)
         {
-            _db.NotDonkeys.Add(animal);
+            var animal = new AnimalWikiInformation() { AnimalName = name, Information = info};
+            _db.AnimalsInformations.Add(animal);
             _db.SaveChanges();
         }
 
-        [HttpPut("{newNumber}")]
-        public void Put(int newNumber)
+        [HttpPut("{newInformation}/{Id}")]
+        public void Put(string newInformation, int Id)
         {
-            var currentAnimal = _db.NotDonkeys.Find(StaticDetails.CurrentUserId);
-            currentAnimal.OwnerPhoneNumber = newNumber;
+            var currentAnimal = _db.AnimalsInformations.Find(Id);
+            currentAnimal.Information = newInformation;
             _db.SaveChanges();
         }
 
-        [HttpDelete]
-        public void Delete()
+        [HttpDelete("{Id}")]
+        public void Delete(int Id)
         {
-            var animalToRemove = _db.NotDonkeys.Find(StaticDetails.CurrentUserId);
-            StaticDetails.CurrentUserId = -1;
-            _db.NotDonkeys.Remove(animalToRemove);
+            var animalInformationToRemove = _db.AnimalsInformations.Find(Id);
+            _db.AnimalsInformations.Remove(animalInformationToRemove);
             _db.SaveChanges();
-            StaticDetails.IsUserLogged = false;
         }
     }
 }

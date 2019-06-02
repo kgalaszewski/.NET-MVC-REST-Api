@@ -6,14 +6,25 @@
 <body style="background-color:lightblue">
     <h2>Add new information about animal</h2>
     <br />
-    <div ng-controller="ExampleController">
+    <div >
         <form novalidate class="simple-form">
-            <label>Name: <input type="text" ng-model="animal.name" /></label><br />
-            <label>Information: <input type="text" ng-model="animal.info" /></label><br />
-            <input type="submit" ng-click="add(animal)" value="Add" />
+            <label>Name: <input type="text" id="name"/></label><br />
+            <label>Information: <input type="text" id="info"/></label><br />
+            <input type="submit" value="Add" onclick="AddNew()"/>
         </form>
     </div>
 
     <script>
+        function AddNew() {
+            var name = document.getElementById("name").value;
+            var info = document.getElementById("info").value;
+
+            $.ajax({
+                url: 'https://localhost:44357/WikiAnimal/' + name + '/' + info,
+                type: 'POST',
+                success: function (result) {
+                }
+            });
+        }
     </script>
 </body>

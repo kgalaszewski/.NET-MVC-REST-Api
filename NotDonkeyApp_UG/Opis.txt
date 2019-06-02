@@ -1,0 +1,17 @@
+1. Na wszystkich stronach jest frontend w bootstrapie, backend w .net Core 2.0
+2. Controller jest jeden od MVC główny 
+3. Są 2 controllery RESTOWE i kazdy z nich posiada metody GET, Post, Put i Delete i są one uzywane
+4. Front-endowe sztuczki w Angularze są na stronach :
+		* Animal Tinder - chowane menu 
+		* Login - zwijane menu 
+		* All Animals - zwijane menu
+		* My Profile - Interaktywny check box
+		* Animal Wiki - Message Box po zareportowaniu zlego info
+		* Update info - chowane menu
+
+5. Uzycie controllerow restowych jest na stronach (GET, POT, PUST i DELETE są użyte z Restowego controllera) :
+		* My Profile 
+		* Animal Wiki
+		* Add new Animal Info
+		* Update Info
+		* Get wiki info 
