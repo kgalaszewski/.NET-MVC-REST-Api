@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using GraniteHouse.Data;
 using Microsoft.AspNetCore.Mvc;
@@ -29,28 +30,52 @@ namespace NotDonkeyApp_UG.Controllers
         }
 
         [HttpPost]
-        public void Post(AnimalNotDonkey animal)
+        public ActionResult Post(AnimalNotDonkey animal)
         {
-            _db.NotDonkeys.Add(animal);
-            _db.SaveChanges();
+            try
+            {
+                _db.NotDonkeys.Add(animal);
+                _db.SaveChanges();
+                return StatusCode((int)HttpStatusCode.OK);
+            }
+            catch (Exception)
+            {
+                return StatusCode((int)HttpStatusCode.ExpectationFailed);
+            }
         }
 
         [HttpPut("{newNumber}")]
-        public void Put(int newNumber)
+        public ActionResult Put(int newNumber)
         {
-            var currentAnimal = _db.NotDonkeys.Find(StaticDetails.CurrentUserId);
-            currentAnimal.OwnerPhoneNumber = newNumber;
-            _db.SaveChanges();
+            try
+            {
+                var currentAnimal = _db.NotDonkeys.Find(StaticDetails.CurrentUserId);
+                currentAnimal.OwnerPhoneNumber = newNumber;
+                _db.SaveChanges();
+                return StatusCode((int)HttpStatusCode.OK);
+            }
+            catch (Exception)
+            {
+                return StatusCode((int)HttpStatusCode.ExpectationFailed);
+            }
         }
 
         [HttpDelete]
-        public void Delete()
+        public ActionResult Delete()
         {
-            var animalToRemove = _db.NotDonkeys.Find(StaticDetails.CurrentUserId);
-            StaticDetails.CurrentUserId = -1;
-            _db.NotDonkeys.Remove(animalToRemove);
-            _db.SaveChanges();
-            StaticDetails.IsUserLogged = false;
+            try
+            {
+                var animalToRemove = _db.NotDonkeys.Find(StaticDetails.CurrentUserId);
+                StaticDetails.CurrentUserId = -1;
+                _db.NotDonkeys.Remove(animalToRemove);
+                _db.SaveChanges();
+                StaticDetails.IsUserLogged = false;
+                return StatusCode((int)HttpStatusCode.OK);
+            }
+            catch (Exception)
+            {
+                return StatusCode((int)HttpStatusCode.ExpectationFailed);
+            }
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using GraniteHouse.Data;
 using Microsoft.AspNetCore.Http;
@@ -27,27 +28,51 @@ namespace NotDonkeyApp_UG.Controllers
         }
 
         [HttpPost("{name}/{info}")]
-        public void Post(string name, string info)
+        public ActionResult Post(string name, string info)
         {
-            var animal = new AnimalWikiInformation() { AnimalName = name, Information = info};
-            _db.AnimalsInformations.Add(animal);
-            _db.SaveChanges();
+            try
+            {
+                var animal = new AnimalWikiInformation() { AnimalName = name, Information = info };
+                _db.AnimalsInformations.Add(animal);
+                _db.SaveChanges();
+                return StatusCode((int)HttpStatusCode.Created);
+            }
+            catch (Exception)
+            {
+                return StatusCode((int)HttpStatusCode.ExpectationFailed);
+            }
         }
 
         [HttpPut("{newInformation}/{Id}")]
-        public void Put(string newInformation, int Id)
+        public ActionResult Put(string newInformation, int Id)
         {
-            var currentAnimal = _db.AnimalsInformations.Find(Id);
-            currentAnimal.Information = newInformation;
-            _db.SaveChanges();
+            try
+            {
+                var currentAnimal = _db.AnimalsInformations.Find(Id);
+                currentAnimal.Information = newInformation;
+                _db.SaveChanges();
+                return StatusCode((int)HttpStatusCode.OK);
+            }
+            catch (Exception)
+            {
+                return StatusCode((int)HttpStatusCode.ExpectationFailed);
+            }
         }
 
         [HttpDelete("{Id}")]
-        public void Delete(int Id)
+        public ActionResult Delete(int Id)
         {
-            var animalInformationToRemove = _db.AnimalsInformations.Find(Id);
-            _db.AnimalsInformations.Remove(animalInformationToRemove);
-            _db.SaveChanges();
+            try
+            {
+                var animalInformationToRemove = _db.AnimalsInformations.Find(Id);
+                _db.AnimalsInformations.Remove(animalInformationToRemove);
+                _db.SaveChanges();
+                return StatusCode((int)HttpStatusCode.OK);
+            }
+            catch (Exception)
+            {
+                return StatusCode((int)HttpStatusCode.ExpectationFailed);
+            }
         }
     }
 }
