@@ -36,7 +36,7 @@ namespace NotDonkeyApp_UG.Controllers
             {
                 _db.NotDonkeys.Add(animal);
                 _db.SaveChanges();
-                return StatusCode((int)HttpStatusCode.OK);
+                return StatusCode((int)HttpStatusCode.Created);
             }
             catch (Exception)
             {
