@@ -71,6 +71,12 @@ namespace NotDonkeyApp_UG.Controllers
             }
         }
 
+        public IActionResult ThrowSuperException()
+        {
+            SetErrorDetails(new Exception(), "Test exception");
+            return RedirectToAction("ThrowErrorMessage");
+        }
+
         public IActionResult AllAnimalsInformations()
         {
             try
